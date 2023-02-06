@@ -1,0 +1,30 @@
+<div id="main-ctn">
+
+    <h1 class="display-artist-name">
+        Albums for: 
+    </h1>
+
+    <div id="main-grid">
+        <% albumsArr.forEach(album=> { %>
+            <div class="item">
+                <div class="item-img-ctn">
+                    <% if (album.images.length) { %>
+                        <img class="item-img" src="<%= album.images[1].url %>" alt="album-cover" />
+                    <% } else { %>
+                        <div class="empty-img"></div>
+                    <% } %>
+                </div>
+                <div class="item-info-ctn">
+                    <div class="item-name-ctn">
+                        <h2 class="item-name">
+                            <%= album.name %>
+                        </h2>
+                    </div>
+                    <div class="item-btn-ctn">
+                        <button class="btn" type="button"><a href="<%= `/tracks/${album.id}` %>">View Tracks</a></button>
+                    </div>
+                </div>
+            </div>
+            <% }) %>
+    </div>
+</div>

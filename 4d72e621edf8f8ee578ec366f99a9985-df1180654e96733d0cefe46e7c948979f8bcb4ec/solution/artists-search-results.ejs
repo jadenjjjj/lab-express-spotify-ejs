@@ -1,0 +1,25 @@
+<div id="main-ctn">
+    <div id="main-grid">
+            <% artistsArr.forEach(artist => { %>
+            <div class="item">
+                <div class="item-img-ctn">
+                    <% if (artist.images.length) { %>     
+                        <img class="item-img" src="<%= artist.images[1].url %>" alt="artist-image" />
+                    <% } else { %>
+                        <div class="empty-img"></div>
+                    <% } %>
+                </div>
+                <div class="item-info-ctn">
+                    <div class="item-name-ctn">
+                        <h2 class="item-name">
+                            <%= artist.name %>
+                        </h2>
+                    </div>
+                    <div class="item-btn-ctn">
+                        <button class="btn" type="button"><a href="<%= `/albums/${artist.id}` %>">View Albums</a></button>
+                    </div>
+                </div>
+            </div>
+            <% }) %>    
+    </div>
+</div>

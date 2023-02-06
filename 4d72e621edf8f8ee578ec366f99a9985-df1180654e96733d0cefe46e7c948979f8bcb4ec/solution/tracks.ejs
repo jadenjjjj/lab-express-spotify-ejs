@@ -1,0 +1,12 @@
+<div class="tracks-ctn">
+    <% tracksArr.forEach(song => { %>
+        <div class="track-item">
+            <div class="track-infos">
+                <span class="track-name">
+                    <%= song.name %>
+                </span>
+            </div>
+            <audio controls class="track-prev" src="<%= song.preview_url %>"></audio>
+        </div>
+    <% }) %>
+</div>
