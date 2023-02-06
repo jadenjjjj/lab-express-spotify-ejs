@@ -30,6 +30,7 @@ app.get('/', (req, res, next) => {
     res.render('home')
 })
 
+/*My solution
 app.get('/artist-search', (req, res, next) => {
     SpotifyWebApi
         .searchAtists(req.query.searchQuery)
@@ -41,7 +42,43 @@ app.get('/artist-search', (req, res, next) => {
             console.log('Something went wrong!', error)
         });
     });
-    
+*/
+
+// Accurate Solution
+app.get('/artist-search', (req, res) => {
+    const { name } = req.query
+    spotifyApi
+        .searchArtists(name)
+        .then(data => {
+            // console.log('The received data from the API: ', data.body);
+            const artistsArr = data.body.artists.items;
+            res.render('artist-search-results', { artistsArr });
+        })
+        .catch(err => console.log('Sth went wrong when searching artists: ', err));
+  })
+
+
+//other solution
+// app.get('/albums/:artistId', (req, res, next) => {
+//     const { artistId } = req.params
+//     spotifyApi
+//         .getArtistAlbums(artistId)
+//         .then(data => {
+//             const albumsArr = data.body.items;
+//             res.render('albums', { albumsArr });
+//         })
+//         .catch(err => console.log('Sth went wrong when searching albums: ', err));
+
+//     spotifyApi
+//         .getArtist(artistId)
+//         .then(data => {
+//             const artistName = data.body.name
+//             console.log(artistName);
+//         })
+//         .catch(err => console.log('Sth went wrong when searching artist name: ', err));
+// })
+
+/*My solution
 app.get('/albums/:artistId', (req, res, next) => {
   spotifyApi.getArtistAlbums(req.params.artistId)
     .then(function(data) {
@@ -52,6 +89,21 @@ app.get('/albums/:artistId', (req, res, next) => {
       console.log('Something went wrong!', error);
     });
 });
+*/
+
+
+//Accuarte solution
+app.get('/albums/:artistId', async (req, res, next) => {
+    try {
+        const { artistId } = req.params
+        const data = await spotifyApi.getArtistAlbums(artistId);
+        const albumsArr = data.body.items;
+        res.render('albums', { albumsArr });
+    } catch (error) {
+        console.log('Sth went wrong when searching albums: ', err);
+    }
+})
+
 
 app.get('/tracks/:albumId', (req, res, next) => {
   spotifyApi.getAlbumTracks(req.params.albumId)
